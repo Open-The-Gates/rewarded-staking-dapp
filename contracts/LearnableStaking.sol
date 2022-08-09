@@ -23,38 +23,51 @@ contract LearnableStaking {
     }
 
     function getReward() public view returns (uint) {
+        if (stakers[msg.sender].balance == 0) {
+            return 0;
+        }
+
+        require(stakers[msg.sender].lastTimeUpdate > 0, "lastTimeUpdate has not been initialised");
         return stakers[msg.sender].reward + (((block.timestamp - stakers[msg.sender].lastTimeUpdate)/epoch)*2*stakers[msg.sender].balance)/100;
     }
 
-    function stakeFund(uint _ammount) external{
-        require(_ammount>0 , "ammount of tokens to be staked can't be null");
-        stakingToken.transferFrom(msg.sender, address(this), _ammount);
-        if (stakers[msg.sender].balance != 0) {
-            stakers[msg.sender].reward = getReward();
+    modifier updateRewardAndLastTimeUpdate() {
+        stakers[msg.sender].reward = getReward();
+        stakers[msg.sender].lastTimeUpdate = block.timestamp;
+        _;
+    }
 
+    modifier checkPositiveAmount(uint _amount) {
+        require(_amount>0, "amount of tokens can't be null");
+        _;
+    }
+
+    modifier initialiseLastTimeUpdate() {
+        if (stakers[msg.sender].lastTimeUpdate == 0) {
+           stakers[msg.sender].lastTimeUpdate = block.timestamp;
         }
-        stakers[msg.sender].balance += _ammount;
-        stakers[msg.sender].lastTimeUpdate = block.timestamp;
+        _;
     }
 
-    function claimReward(uint _ammount) external{
-        stakers[msg.sender].reward = getReward()
-        require(_ammount>0 , "ammount of tokens to be claimed can't be null");
-        require(_ammount <= stakers[msg.sender].reward , "ammount of tokens to be claimed can't be superior to rewards' balance");
-
-        stakers[msg.sender].reward -= _ammount;
-        stakers[msg.sender].lastTimeUpdate = block.timestamp;
-        stakingToken.transferFrom(msg.sender, address(this), _ammount);
+    function stakeFund(uint _amount) external checkPositiveAmount(_amount) updateRewardAndLastTimeUpdate{
+        require(stakingToken.approve(msg.sender, _amount), "could not approve transfer")
+        require(stakingToken.transferFrom(msg.sender, address(this), _amount),"could not transfer staking funds");
+        stakers[msg.sender].balance += _amount;
     }
 
-    function withdrawFund(uint _ammount) external{
-        require(_ammount>0 , "ammount of tokens to be withdrawn can't be null");
-        require(_ammount <= stakers[msg.sender].balance , "ammount of tokens to be withdrawn can't be superior to deposit balance");
+    function claimReward(uint _amount) external checkPositiveAmount(_amount) updateRewardAndLastTimeUpdate{
+        require(_amount <= stakers[msg.sender].reward, "amount of tokens to be claimed can't exceed rewards' balance");
 
-        stakers[msg.sender].reward = getReward(); 
-        stakers[msg.sender].balance -= _ammount;
-        stakers[msg.sender].lastTimeUpdate = block.timestamp;
-        stakingToken.transferFrom(address(this), msg.sender, _ammount);
+        stakers[msg.sender].reward -= _amount;
+        require(rewardToken.approve(msg.sender, _amount), "could not approve withdrawal")
+        rewardToken.transferFrom(msg.sender, address(this), _amount);
+    }
 
+    function withdrawFund(uint _amount) external checkPositiveAmount(_amount) updateRewardAndLastTimeUpdate{
+        require(_amount <= stakers[msg.sender].balance, "amount of tokens to be withdrawn can't exceed deposit balance");
+
+        stakers[msg.sender].balance -= _amount;
+        require(stakingToken.approve(msg.sender, _amount), "could not approve withdrawal")
+        stakingToken.transferFrom(address(this), msg.sender, _amount, "transfer failed");
     }
 }
