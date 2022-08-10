@@ -5,7 +5,7 @@ This is a defi protocole composed of two tokens :
 - LearnableReward which is the token gained as a reward.
 
 The LearnableStaking smart contact allows the investor to :
-- Stak a given amount of token.
+- Stake a given amount of token.
 - Withdraw a staked amount of token.
 - Check the amount of reward collected.
 - Withdraw an amount of the reward collected.
