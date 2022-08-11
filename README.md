@@ -1,6 +1,6 @@
 # About the project
 
-This is a defi protocole composed of two tokens :
+This is a defi protocole based on two tokens :
 - Learnable which is the token needed in staking.
 - LearnableReward which is the token gained as a reward.
 
