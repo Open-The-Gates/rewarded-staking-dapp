@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import Wallet from './Wallet.jsx';
+import React, { useState, useEffect } from 'react';
+import Web3 from 'web3';
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
 
 function App() {
+  const [account, setAccount] = useState([])
+  const [web3, setWeb3] = useState(new Web3(window.ethereum))
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <Wallet
+        account={account}
+        setAccount={setAccount}
+        web3={web3}
+        setWeb3={setWeb3}
+        />
+      </div>
     </div>
   );
 }
