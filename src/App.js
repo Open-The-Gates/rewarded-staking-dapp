@@ -3,6 +3,7 @@ import Wallet from './Wallet.jsx';
 import React, { useState, useEffect } from 'react';
 import Web3 from 'web3';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import Pool from './Pool.jsx';
 
 
 function App() {
@@ -11,16 +12,14 @@ function App() {
 
   return (
     <div className="App">
-      <div>
         <Wallet
         account={account}
         setAccount={setAccount}
         web3={web3}
         setWeb3={setWeb3}
         />
-      </div>
+      <Pool/>
     </div>
   );
 }
-
 export default App;
