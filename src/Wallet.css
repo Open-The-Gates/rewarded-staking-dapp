@@ -1,11 +1,13 @@
 .connect-button {
     height: 80px;
     width: 20%;
-    margin: 30px;
+    margin-top: -120px;
+    margin-right: 30px;
     float: right;
     font-size: larger;
     font-weight: bold;
     font-family: 'DynaPuff', cursive;
+    position: relative;
 }
 
 /* Rectangle Out */

@@ -2,7 +2,7 @@ pragma solidity 0.8.15;
 
 import "./Learnable.sol";
 
-contract LearnableStaking {
+contract StakingPool {
 
     Learnable public immutable stakingToken;
     LearnableReward public immutable rewardToken;

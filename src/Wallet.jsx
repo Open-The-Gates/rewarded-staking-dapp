@@ -1,8 +1,6 @@
 import './Wallet.css';
 import React, { Component } from 'react'
 import ClipLoader from "react-spinners/ClipLoader";
-import Spinner from 'react-bootstrap/Spinner';
-import { Button } from 'bootstrap';
 
 
 class Wallet extends Component {

@@ -1,0 +1,66 @@
+#staking-pool {
+    height: 500px;
+    width: 60%;
+    background-image: url(shattered-island.gif);
+    margin-top: 150px;
+    margin-left: 20%;
+    border-radius: 50px;
+    color: white;
+    font-family: 'Raleway';
+    font-size: 2.5rem;
+    padding-top: 40px;
+    --borderWidth: 3px;
+    position: relative;
+}
+  #staking-pool:after {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--borderWidth));
+    left: calc(-1 * var(--borderWidth));
+    height: calc(100% + var(--borderWidth) * 2);
+    width: calc(100% + var(--borderWidth) * 2);
+    background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    border-radius: 45px;
+    z-index: -1;
+    animation: animatedgradient 3s ease alternate infinite;
+    background-size: 300% 300%;
+  }
+  
+
+  @keyframes animatedgradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .text {
+    text-align: center;
+    background-image: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    color: #000;
+    background-clip: text;
+    text-fill-color: transparent;
+    font-weight: bold;
+    font-family: 'DynaPuff', cursive;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;    
+}
+
+.data {
+    background: #000;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.data-box {
+    margin-top: 40px;
+    font-size: 30px;
+    margin: 30px 40px;
+}  
