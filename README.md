@@ -1,4 +1,4 @@
-# About the project
+# Stakin Dapp
 
 ![WhatsApp Image 2022-08-14 at 21 35 28](https://user-images.githubusercontent.com/49349245/185220771-34ef2f7f-debf-442a-b0e4-71c6203aba48.jpeg)
 
